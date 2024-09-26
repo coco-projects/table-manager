@@ -1,1 +1,9 @@
-# table-manager
+## usage
+
+see examples folder
+
+---
+
+## License
+
+MIT
