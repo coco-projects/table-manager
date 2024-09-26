@@ -8,9 +8,11 @@
 
     $db = TableRegistry::initMysqlClient('ithinkphp_telegraph_test01');
 
-    $logger = new \Monolog\Logger('my_logger');
-    $db->setLogger($logger);
-    $db->addStdoutLogger();
+    $db->setStandardLogger('test');
+
+    $db->addStdoutHandler(callback: function(\Monolog\Handler\StreamHandler $handler, TableRegistry $_this) {
+        $handler->setFormatter(new \Coco\logger\MyFormatter());
+    });
 
     $t1 = new TestTable1('test1');
     $t2 = new TestTable2('test2');
