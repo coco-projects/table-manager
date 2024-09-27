@@ -4,4 +4,4 @@
 
     $db->getTable('test1')->create(true);
 
-    $db->getTable('test1')->truncate();
+//    $db->getTable('test1')->truncate();

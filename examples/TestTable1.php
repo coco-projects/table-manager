@@ -14,8 +14,9 @@
         ];
 
         protected array $indexSentence = [
-            "page_type" => "KEY `__FIELD__NAME___index` (`__FIELD__NAME__`),",
-            "token"     => "KEY `__FIELD__NAME___index` (`__FIELD__NAME__`),",
+            "path,page_type" => "KEY `__INDEX__NAME___index` (__FIELD__NAME__),",
+            "page_type"      => "KEY `__INDEX__NAME___index` (__FIELD__NAME__),",
+            "token"          => "KEY `__INDEX__NAME___index` (__FIELD__NAME__),",
         ];
 
         public function setPathField(string $value): static

@@ -2,7 +2,7 @@
 
     require 'common.php';
 
-    $db->removeTable('test1');
+//    $db->removeTable('test1');
 
-    $db->createAllTable();
+    $db->createAllTable(true);
 //    $db->dropAllTable();

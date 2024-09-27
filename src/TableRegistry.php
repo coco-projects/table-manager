@@ -176,6 +176,19 @@ AAA;
         return implode('', $result);
     }
 
+
+    public static function makeFieldsSqlMap(string $sql): string
+    {
+        $re = [];
+        preg_match_all('/^\s*`([^`]+)` ([^\r\n]+)/sm', $sql, $result, PREG_SET_ORDER);
+
+        foreach ($result as $k => $v) {
+            $re[] = '"' . $v[1] . '"      => "`__FIELD__NAME__` ' . $v[2] . '",';
+        }
+
+        return implode(PHP_EOL, $re);
+    }
+
     public static function snakeToCamel(string $string, $capitalizeFirstChar = false): string
     {
         // 将字符串按照下划线分割为数组

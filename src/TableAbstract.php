@@ -159,15 +159,24 @@ abstract class TableAbstract
         }
 
         foreach ($this->indexSentence as $systemFieldName => $sentence) {
-            $fieldName = $this->getFieldName($systemFieldName);
+            $fieldNameArray = explode(',', $systemFieldName);
+
+            $t = [];
+            foreach ($fieldNameArray as $fieldName) {
+                $t[] = $this->getFieldName($fieldName);
+            }
 
             $sql[] = strtr($sentence, [
-                "__FIELD__NAME__" => $fieldName,
+                "__INDEX__NAME__" => implode('_', $t),
+                "__FIELD__NAME__" => implode(',', array_map(function ($v) {
+                    return "`$v`";
+                }, $t)),
             ]);
         }
 
         $sql[] = "PRIMARY KEY (`" . $this->pkField . "`)";
-        $sql[] = ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='" . $this->comment . "';";
+
+        $sql[] = ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='" . $this->comment . "';" . PHP_EOL;
 
         return implode(PHP_EOL, $sql);
     }

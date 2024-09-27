@@ -25,8 +25,8 @@
         $table->setPkValueCallable($registry::snowflakePKCallback());
 
         //设置字段名,不设置就是默认字段：$fieldsSqlMap 的键
-        $table->setPageTypeField('page_type__');
-        $table->setTokenField('token__');
+        $table->setPageTypeField('page_type__1');
+        $table->setTokenField('token__1');
     });
 
     $db->addTable($t2, function(TestTable2 $table) {
@@ -36,8 +36,8 @@
         $table->setIsPkAutoInc(true);
 
         //设置字段名,不设置就是默认字段：$fieldsSqlMap 的键
-        $table->setPageTypeField('page_type__');
-        $table->setTokenField('token__');
+        $table->setPageTypeField('page_type__2');
+        $table->setTokenField('token__2');
 
     });
 
