@@ -10,9 +10,7 @@
 
     $db->setStandardLogger('test');
 
-    $db->addStdoutHandler(callback: function(\Monolog\Handler\StreamHandler $handler, TableRegistry $_this) {
-        $handler->setFormatter(new \Coco\logger\MyFormatter());
-    });
+    $db->addStdoutHandler(callback: $db::getStandardFormatter());
 
     $t1 = new TestTable1('test1');
     $t2 = new TestTable2('test2');
