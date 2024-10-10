@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "coco-project/logger",
-            "version": "v1.0.7",
+            "version": "v1.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/coco-projects/logger.git",
-                "reference": "af86e322cb478792a07320b469d68ce6e667e5a9"
+                "reference": "260a6c71765cbb6aeb2f117a2a504625f5163aca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/coco-projects/logger/zipball/af86e322cb478792a07320b469d68ce6e667e5a9",
-                "reference": "af86e322cb478792a07320b469d68ce6e667e5a9",
+                "url": "https://api.github.com/repos/coco-projects/logger/zipball/260a6c71765cbb6aeb2f117a2a504625f5163aca",
+                "reference": "260a6c71765cbb6aeb2f117a2a504625f5163aca",
                 "shasum": ""
             },
             "require": {
@@ -43,9 +43,9 @@
             ],
             "support": {
                 "issues": "https://github.com/coco-projects/logger/issues",
-                "source": "https://github.com/coco-projects/logger/tree/v1.0.7"
+                "source": "https://github.com/coco-projects/logger/tree/v1.0.8"
             },
-            "time": "2024-10-08T11:45:51+00:00"
+            "time": "2024-10-08T12:44:45+00:00"
         },
         {
             "name": "coco-project/snowflake",
@@ -338,16 +338,16 @@
         },
         {
             "name": "topthink/think-orm",
-            "version": "v3.0.27",
+            "version": "v3.0.28",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/think-orm.git",
-                "reference": "9c691f6bedc8a47103767a9a682810308c30c010"
+                "reference": "407dfd782b6124b2a33c9867e9c09041f36fb4ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/think-orm/zipball/9c691f6bedc8a47103767a9a682810308c30c010",
-                "reference": "9c691f6bedc8a47103767a9a682810308c30c010",
+                "url": "https://api.github.com/repos/top-think/think-orm/zipball/407dfd782b6124b2a33c9867e9c09041f36fb4ba",
+                "reference": "407dfd782b6124b2a33c9867e9c09041f36fb4ba",
                 "shasum": ""
             },
             "require": {
@@ -390,9 +390,9 @@
             ],
             "support": {
                 "issues": "https://github.com/top-think/think-orm/issues",
-                "source": "https://github.com/top-think/think-orm/tree/v3.0.27"
+                "source": "https://github.com/top-think/think-orm/tree/v3.0.28"
             },
-            "time": "2024-09-11T01:29:29+00:00"
+            "time": "2024-10-10T02:14:17+00:00"
         }
     ],
     "packages-dev": [
@@ -528,16 +528,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v5.3.0",
+            "version": "v5.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "3abf7425cd284141dc5d8d14a9ee444de3345d1a"
+                "reference": "8eea230464783aa9671db8eea6f8c6ac5285794b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/3abf7425cd284141dc5d8d14a9ee444de3345d1a",
-                "reference": "3abf7425cd284141dc5d8d14a9ee444de3345d1a",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/8eea230464783aa9671db8eea6f8c6ac5285794b",
+                "reference": "8eea230464783aa9671db8eea6f8c6ac5285794b",
                 "shasum": ""
             },
             "require": {
@@ -580,9 +580,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
-                "source": "https://github.com/nikic/PHP-Parser/tree/v5.3.0"
+                "source": "https://github.com/nikic/PHP-Parser/tree/v5.3.1"
             },
-            "time": "2024-09-29T13:56:26+00:00"
+            "time": "2024-10-08T18:51:32+00:00"
         },
         {
             "name": "phar-io/manifest",
