@@ -68,6 +68,15 @@ class TableRegistry
         return $this;
     }
 
+    public function initTable(string $name, string $tableClass, callable $callback): static
+    {
+        $table = new $tableClass($name);
+
+        $this->addTable($table, $callback);
+
+        return $this;
+    }
+
     public function removeTable(string $name): static
     {
         if (isset($this->tables[$name])) {

@@ -9,12 +9,10 @@
     $db = TableRegistry::initMysqlClient('ithinkphp_telegraph_test01');
 
     $db->setStandardLogger('test');
-
     $db->addStdoutHandler(callback: $db::getStandardFormatter());
 
+    // 初始化方式1
     $t1 = new TestTable1('test1');
-    $t2 = new TestTable2('test2');
-
     $db->addTable($t1, function(TestTable1 $table) {
         $registry = $table->getTableRegistry();
 
@@ -27,7 +25,8 @@
         $table->setTokenField('token__1');
     });
 
-    $db->addTable($t2, function(TestTable2 $table) {
+    // 初始化方式2
+    $db->initTable('test2', TestTable2::class, function(TestTable2 $table) {
         $registry = $table->getTableRegistry();
 
         $table->setPkField('id');
@@ -38,4 +37,3 @@
         $table->setTokenField('token__2');
 
     });
-
