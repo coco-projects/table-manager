@@ -23,8 +23,8 @@ class TableRegistry
                 'db' => [
                     'type'     => 'mysql',
                     'hostname' => $host,
-                    'password' => $username,
-                    'username' => $password,
+                    'username' => $username,
+                    'password' => $password,
                     'database' => $dbName,
                     'charset'  => 'utf8mb4',
                     'prefix'   => '',
