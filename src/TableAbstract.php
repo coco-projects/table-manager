@@ -37,6 +37,22 @@ abstract class TableAbstract
         return $this->tableRegistry->getDbManager()->table($this->name);
     }
 
+    public function getCount(): int
+    {
+        return $this->tableIns()->count();
+    }
+
+    public function isTableCerated(): bool
+    {
+        try {
+            $this->tableIns()->find();
+
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
     public function setFeildName($systemName, $customName): static
     {
         $this->fieldsCustomNameMap[$systemName] = $customName;
