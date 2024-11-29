@@ -45,7 +45,7 @@ abstract class TableAbstract
     public function isTableCerated(): bool
     {
         try {
-            $this->tableIns()->find();
+            $this->tableIns()->fetchSql()->select();
 
             return true;
         } catch (\Exception $e) {
