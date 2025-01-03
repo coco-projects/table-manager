@@ -15,7 +15,7 @@ class TableRegistry
     protected static array $connections = [];
     protected string       $dbName;
 
-    private function __construct($dbName, $host = '127.0.0.1', $username = 'root', $password = 'root', $port = 3306)
+    public function __construct($dbName, $host = '127.0.0.1', $username = 'root', $password = 'root', $port = 3306)
     {
         $config = [
             'default'     => 'db',
