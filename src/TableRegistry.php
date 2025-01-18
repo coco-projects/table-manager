@@ -50,11 +50,26 @@
                 $db,
             ]));
 
-            if (!isset(static::$connections[$hash])) {
+            if (!isset(static::$connections[$hash]))
+            {
                 static::$connections[$hash] = new static($db, $host, $username, $password, $port);
             }
 
             return static::$connections[$hash];
+        }
+
+        public function testDbConnect(): bool
+        {
+            try
+            {
+                $this->dbManager->query('select 1');
+
+                return true;
+            }
+            catch (\Exception $e)
+            {
+                return false;
+            }
         }
 
         public function addTable(TableAbstract $table, callable $callback): static
@@ -79,7 +94,8 @@
 
         public function removeTable(string $name): static
         {
-            if (isset($this->tables[$name])) {
+            if (isset($this->tables[$name]))
+            {
                 $this->tables[$name]->setTableRegistry(null);
 
                 unset($this->tables[$name]);
@@ -117,7 +133,8 @@
             /**
              * @var TableAbstract $tableObject
              */
-            foreach ($this->tables as $k => $tableObject) {
+            foreach ($this->tables as $k => $tableObject)
+            {
                 $tableObject->drop();
             }
 
@@ -129,7 +146,8 @@
             /**
              * @var TableAbstract $tableObject
              */
-            foreach ($this->tables as $k => $tableObject) {
+            foreach ($this->tables as $k => $tableObject)
+            {
                 $tableObject->truncate();
             }
 
@@ -141,7 +159,8 @@
             /**
              * @var TableAbstract $tableObject
              */
-            foreach ($this->tables as $k => $tableObject) {
+            foreach ($this->tables as $k => $tableObject)
+            {
                 $tableObject->create($forceCreateTable);
             }
         }
@@ -150,7 +169,7 @@
         {
             $snowflake = new Snowflake();
 
-            return function () use($snowflake) {
+            return function() use ($snowflake) {
                 return $snowflake->id();
             };
         }
@@ -175,7 +194,8 @@
 
 AAA;
 
-            foreach ($fieldsSqlMap as $k => $v) {
+            foreach ($fieldsSqlMap as $k => $v)
+            {
                 $result[] = strtr($template, [
                     "__L__" => $k,
                     "__U__" => static::snakeToCamel($k, true),
@@ -191,7 +211,8 @@ AAA;
             $re = [];
             preg_match_all('/^\s*`([^`]+)` ([^\r\n]+)/sm', $sql, $result, PREG_SET_ORDER);
 
-            foreach ($result as $k => $v) {
+            foreach ($result as $k => $v)
+            {
                 $re[] = '"' . $v[1] . '"      => "`__FIELD__NAME__` ' . $v[2] . '",';
             }
 
@@ -204,9 +225,12 @@ AAA;
             $str = str_replace('_', '', ucwords($string, '_'));
 
             // 根据需要决定是否首字母大写
-            if ($capitalizeFirstChar) {
+            if ($capitalizeFirstChar)
+            {
                 return $str;
-            } else {
+            }
+            else
+            {
                 return lcfirst($str);
             }
         }
