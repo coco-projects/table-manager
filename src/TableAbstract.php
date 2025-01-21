@@ -192,7 +192,7 @@ abstract class TableAbstract
 
         $sql[] = "PRIMARY KEY (`" . $this->pkField . "`)";
 
-        $sql[] = ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='" . $this->comment . "';" . PHP_EOL;
+        $sql[] = ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci COMMENT='" . $this->comment . "';" . PHP_EOL;
 
         return implode(PHP_EOL, $sql);
     }
