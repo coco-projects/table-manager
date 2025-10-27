@@ -4,6 +4,7 @@
 
     use Coco\logger\Logger;
     use Coco\snowflake\Snowflake;
+    use \PDO;
     use think\DbManager;
 
     class TableRegistry
@@ -30,6 +31,10 @@
                         'prefix'   => '',
                         'hostport' => $port,
                         'debug'    => true,
+                        'params'   => [
+                            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+                            PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8mb4",
+                        ],
                     ],
                 ],
             ];
@@ -38,6 +43,8 @@
             $this->dbManager = new DbManager();
             $this->dbManager->setConfig($config);
             $this->dbManager->connect();
+
+            $this->dbManager->execute("SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci");
         }
 
         public static function initMysqlClient($db, $host = '127.0.0.1', $username = 'root', $password = 'root', $port = 3306): static
