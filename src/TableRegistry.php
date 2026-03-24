@@ -161,7 +161,7 @@
             return $this;
         }
 
-        public function createAllTable(bool $forceCreateTable = false): void
+        public function createAllTable(bool $forceCreateTable = false): static
         {
             /**
              * @var TableAbstract $tableObject
@@ -170,6 +170,45 @@
             {
                 $tableObject->create($forceCreateTable);
             }
+
+            return $this;
+        }
+
+        public function getAllTableStatus(): array
+        {
+            $data = [];
+
+            /**
+             * @var TableAbstract $tableObject
+             */
+            foreach ($this->tables as $k => $tableObject)
+            {
+                $isTableCerated = $tableObject->isTableCerated();
+
+                $data[$tableObject->getName()] = [
+                    'is_created' => (int)$isTableCerated,
+                    'count'      => $isTableCerated ? (int)$tableObject->getCount() : 0,
+                ];
+            }
+
+            return $data;
+        }
+
+        public function isAllTablesExists(): bool
+        {
+            $tableStatus       = $this->getAllTableStatus();
+            $isAllTablesCreated = true;
+
+            foreach ($tableStatus as $k => $v)
+            {
+                if (!$v['is_created'])
+                {
+                    $isAllTablesCreated = false;
+                    break;
+                }
+            }
+
+            return $isAllTablesCreated;
         }
 
         public static function snowflakePKCallback(): \Closure
