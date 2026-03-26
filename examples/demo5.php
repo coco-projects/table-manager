@@ -43,6 +43,22 @@ SQL;
     print_r($arrDefine);
 
     /*
-
+"bot_id"      => "`__FIELD__NAME__` BIGINT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT '机器人 telegramid',",
+"update_id"      => "`__FIELD__NAME__` BIGINT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'update_id',",
+"sender_id"      => "`__FIELD__NAME__` BIGINT (11) NOT NULL DEFAULT '0' COMMENT 'sender_id',",
+"media_group_id"      => "`__FIELD__NAME__` BIGINT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'media_group_id',",
+"message_load_type"      => "`__FIELD__NAME__` TINYINT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'text=1, video=2, photo=3, audio=4, document=5, animation=6, sticker=7, location=8, contact=9, news=10, poll=11',",
+"message_from_type"      => "`__FIELD__NAME__` TINYINT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT '1:message, 2:edited_message, 3:channel_post, 4:edited_channel_post',",
+"file_id"      => "`__FIELD__NAME__` VARCHAR (255) NOT NULL DEFAULT '' COMMENT 'file_id',",
+"file_unique_id"      => "`__FIELD__NAME__` VARCHAR (255) NOT NULL DEFAULT '' COMMENT 'file_unique_id',",
+"file_size"      => "`__FIELD__NAME__` BIGINT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'file_size',",
+"caption"      => "`__FIELD__NAME__` TEXT COMMENT '标题',",
+"chat_type"      => "`__FIELD__NAME__` TINYINT (4) DEFAULT NULL COMMENT 'private=1, group=2, supergroup=3, channel=4',",
+"text"      => "`__FIELD__NAME__` LONGTEXT COMMENT 'text 信息',",
+"raw"      => "`__FIELD__NAME__` LONGTEXT COMMENT '原生json',",
+"date"      => "`__FIELD__NAME__` INT (10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '信息发送时间',",
+"time"      => "`__FIELD__NAME__` INT (10) UNSIGNED NOT NULL DEFAULT '0',",
+"chat_source_type"      => "`__FIELD__NAME__` CHAR(24) NOT NULL DEFAULT '' COMMENT 'channel or user',",
+"chat_source_username"      => "`__FIELD__NAME__` CHAR(24) NOT NULL DEFAULT '' COMMENT 'username',",
 
      * */

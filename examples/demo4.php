@@ -4,12 +4,12 @@
 
     require 'common.php';
 
-    $method = TableRegistry::makeMethod($t2->getFieldsSqlMap());
+//    $method = TableRegistry::makeMethod($t1->getFieldsSqlMap());
+    $method = TableRegistry::makeMethod($db->getTable('test2')->getFieldsSqlMap());
 
     print_r($method);
 
     /*
-
             public function setPathField(string $value): static
             {
                 $this->setFeildName('path', $value);
