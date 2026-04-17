@@ -2,7 +2,9 @@
 
     namespace Coco\examples;
 
-    class TestTable1 extends \Coco\tableManager\TableAbstract
+    use Coco\tableManager\TableAbstract;
+
+    class TestTable1 extends TableAbstract
     {
         public string $comment = 'test111 页面';
 
@@ -21,7 +23,7 @@
 
         public function setPathField(string $value): static
         {
-            $this->setFeildName('path', $value);
+            $this->setFieldName('path', $value);
 
             return $this;
         }
@@ -33,7 +35,7 @@
 
         public function setTitleField(string $value): static
         {
-            $this->setFeildName('title', $value);
+            $this->setFieldName('title', $value);
 
             return $this;
         }
@@ -45,7 +47,7 @@
 
         public function setPageTypeField(string $value): static
         {
-            $this->setFeildName('page_type', $value);
+            $this->setFieldName('page_type', $value);
 
             return $this;
         }
@@ -57,7 +59,7 @@
 
         public function setTokenField(string $value): static
         {
-            $this->setFeildName('token', $value);
+            $this->setFieldName('token', $value);
 
             return $this;
         }

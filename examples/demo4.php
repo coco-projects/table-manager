@@ -12,7 +12,7 @@
     /*
             public function setPathField(string $value): static
             {
-                $this->setFeildName('path', $value);
+                $this->setFieldName('path', $value);
 
                 return $this;
             }
@@ -24,7 +24,7 @@
 
             public function setUrlField(string $value): static
             {
-                $this->setFeildName('url', $value);
+                $this->setFieldName('url', $value);
 
                 return $this;
             }
@@ -36,7 +36,7 @@
 
             public function setTitleField(string $value): static
             {
-                $this->setFeildName('title', $value);
+                $this->setFieldName('title', $value);
 
                 return $this;
             }
@@ -48,7 +48,7 @@
 
             public function setPageTypeField(string $value): static
             {
-                $this->setFeildName('page_type', $value);
+                $this->setFieldName('page_type', $value);
 
                 return $this;
             }
@@ -60,7 +60,7 @@
 
             public function setTokenField(string $value): static
             {
-                $this->setFeildName('token', $value);
+                $this->setFieldName('token', $value);
 
                 return $this;
             }

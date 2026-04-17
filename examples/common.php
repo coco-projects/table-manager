@@ -6,7 +6,7 @@
 
     require '../vendor/autoload.php';
 
-    $db = TableRegistry::initMysqlClient('ithinkphp_telegraph_test01');
+    $db = TableRegistry::initMysqlClient('table_manager');
 
     $db->setStandardLogger('test');
     $db->addStdoutHandler(callback: $db::getStandardFormatter());
@@ -35,5 +35,15 @@
         //设置字段名,不设置就是默认字段：$fieldsSqlMap 的键
         $table->setPageTypeField('page_type__2');
         $table->setTokenField('token__2');
+    });
 
+    // 初始化分表
+    $partTable = new \Coco\examples\TablePartTest('part_test', 5);
+
+    $db->addTable($partTable, function(\Coco\tableManager\TablePart $table) {
+        $registry = $table->getTableRegistry();
+
+        $table->setPkField('id');
+        $table->setIsPkAutoInc(false);
+        $table->setPkValueCallable($registry::snowflakePKCallback());
     });

@@ -79,7 +79,7 @@ SQL;
 
         public function setBotIdField(string $value): static
         {
-            $this->setFeildName('bot_id', $value);
+            $this->setFieldName('bot_id', $value);
 
             return $this;
         }
@@ -91,7 +91,7 @@ SQL;
 
         public function setUpdateIdField(string $value): static
         {
-            $this->setFeildName('update_id', $value);
+            $this->setFieldName('update_id', $value);
 
             return $this;
         }
@@ -103,7 +103,7 @@ SQL;
 
         public function setSenderIdField(string $value): static
         {
-            $this->setFeildName('sender_id', $value);
+            $this->setFieldName('sender_id', $value);
 
             return $this;
         }
@@ -115,7 +115,7 @@ SQL;
 
         public function setMediaGroupIdField(string $value): static
         {
-            $this->setFeildName('media_group_id', $value);
+            $this->setFieldName('media_group_id', $value);
 
             return $this;
         }
@@ -127,7 +127,7 @@ SQL;
 
         public function setMessageLoadTypeField(string $value): static
         {
-            $this->setFeildName('message_load_type', $value);
+            $this->setFieldName('message_load_type', $value);
 
             return $this;
         }
@@ -139,7 +139,7 @@ SQL;
 
         public function setMessageFromTypeField(string $value): static
         {
-            $this->setFeildName('message_from_type', $value);
+            $this->setFieldName('message_from_type', $value);
 
             return $this;
         }
@@ -151,7 +151,7 @@ SQL;
 
         public function setFileIdField(string $value): static
         {
-            $this->setFeildName('file_id', $value);
+            $this->setFieldName('file_id', $value);
 
             return $this;
         }
@@ -163,7 +163,7 @@ SQL;
 
         public function setFileUniqueIdField(string $value): static
         {
-            $this->setFeildName('file_unique_id', $value);
+            $this->setFieldName('file_unique_id', $value);
 
             return $this;
         }
@@ -175,7 +175,7 @@ SQL;
 
         public function setFileSizeField(string $value): static
         {
-            $this->setFeildName('file_size', $value);
+            $this->setFieldName('file_size', $value);
 
             return $this;
         }
@@ -187,7 +187,7 @@ SQL;
 
         public function setCaptionField(string $value): static
         {
-            $this->setFeildName('caption', $value);
+            $this->setFieldName('caption', $value);
 
             return $this;
         }
@@ -199,7 +199,7 @@ SQL;
 
         public function setChatTypeField(string $value): static
         {
-            $this->setFeildName('chat_type', $value);
+            $this->setFieldName('chat_type', $value);
 
             return $this;
         }
@@ -211,7 +211,7 @@ SQL;
 
         public function setTextField(string $value): static
         {
-            $this->setFeildName('text', $value);
+            $this->setFieldName('text', $value);
 
             return $this;
         }
@@ -223,7 +223,7 @@ SQL;
 
         public function setRawField(string $value): static
         {
-            $this->setFeildName('raw', $value);
+            $this->setFieldName('raw', $value);
 
             return $this;
         }
@@ -235,7 +235,7 @@ SQL;
 
         public function setDateField(string $value): static
         {
-            $this->setFeildName('date', $value);
+            $this->setFieldName('date', $value);
 
             return $this;
         }
@@ -247,7 +247,7 @@ SQL;
 
         public function setTimeField(string $value): static
         {
-            $this->setFeildName('time', $value);
+            $this->setFieldName('time', $value);
 
             return $this;
         }
@@ -259,7 +259,7 @@ SQL;
 
         public function setChatSourceTypeField(string $value): static
         {
-            $this->setFeildName('chat_source_type', $value);
+            $this->setFieldName('chat_source_type', $value);
 
             return $this;
         }
@@ -271,7 +271,7 @@ SQL;
 
         public function setChatSourceUsernameField(string $value): static
         {
-            $this->setFeildName('chat_source_username', $value);
+            $this->setFieldName('chat_source_username', $value);
 
             return $this;
         }

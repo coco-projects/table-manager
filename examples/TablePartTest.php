@@ -2,23 +2,23 @@
 
     namespace Coco\examples;
 
-    use Coco\tableManager\TableAbstract;
+    use Coco\tableManager\TablePart;
 
-    class TestTable2 extends TableAbstract
+    class TablePartTest extends TablePart
     {
-        public string $comment = 'test222 页面';
+        public string $comment = 'part test';
 
         public array $fieldsSqlMap = [
             "path"      => "`__FIELD__NAME__` char(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '路径',",
-            "url"       => "`__FIELD__NAME__` char(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '完整url',",
             "title"     => "`__FIELD__NAME__` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '标题',",
             "page_type" => "`__FIELD__NAME__` int(10) unsigned NOT NULL COMMENT '页面类型，1:首页，2:列表页，3:详情页',",
             "token"     => "`__FIELD__NAME__` char(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '对应页面的token',",
         ];
 
         protected array $indexSentence = [
-            "page_type" => "KEY `__INDEX__NAME___index` (__FIELD__NAME__),",
-            "token"     => "KEY `__INDEX__NAME___index` (__FIELD__NAME__),",
+            "path,page_type" => "KEY `__INDEX__NAME___index` (__FIELD__NAME__),",
+            "page_type"      => "KEY `__INDEX__NAME___index` (__FIELD__NAME__),",
+            "token"          => "KEY `__INDEX__NAME___index` (__FIELD__NAME__),",
         ];
 
         public function setPathField(string $value): static
@@ -31,18 +31,6 @@
         public function getPathField(): string
         {
             return $this->getFieldName('path');
-        }
-
-        public function setUrlField(string $value): static
-        {
-            $this->setFieldName('url', $value);
-
-            return $this;
-        }
-
-        public function getUrlField(): string
-        {
-            return $this->getFieldName('url');
         }
 
         public function setTitleField(string $value): static
@@ -80,4 +68,5 @@
         {
             return $this->getFieldName('token');
         }
+
     }

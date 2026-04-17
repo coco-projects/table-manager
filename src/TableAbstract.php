@@ -4,196 +4,234 @@
 
     use think\db\Query;
 
-abstract class TableAbstract
-{
-    protected ?TableRegistry $tableRegistry   = null;
-    protected string         $comment;
-    protected string         $pkField         = 'id';
-    protected bool           $isPkAutoInc     = true;
-    protected $PkValueCallable = null;
-
-    protected array $fieldsSqlMap        = [];
-    protected array $fieldsCustomNameMap = [];
-    protected array $indexSentence       = [];
-
-    public function __construct(protected string $name)
+    abstract class TableAbstract
     {
-    }
+        protected ?TableRegistry $tableRegistry;
+        protected string         $comment         = '';
+        protected string         $pkField         = 'id';
+        protected bool           $isPkAutoInc     = true;
+        protected                $pkValueCallable = null;
 
-    public function setTableRegistry(?TableRegistry $tableRegistry): static
-    {
-        $this->tableRegistry = $tableRegistry;
+        protected array $fieldsSqlMap        = [];
+        protected array $fieldsCustomNameMap = [];
+        protected array $indexSentence       = [];
 
-        return $this;
-    }
-
-    public function getTableRegistry(): TableRegistry
-    {
-        return $this->tableRegistry;
-    }
-
-    public function tableIns(): Query
-    {
-        return $this->tableRegistry->getDbManager()->table($this->name);
-    }
-
-    public function getCount(): int
-    {
-        return $this->tableIns()->count();
-    }
-
-    public function isTableCerated(): bool
-    {
-        try {
-            $this->tableIns()->fetchSql()->select();
-
-            return true;
-        } catch (\Exception $e) {
-            return false;
-        }
-    }
-
-    public function setFeildName($systemName, $customName): static
-    {
-        $this->fieldsCustomNameMap[$systemName] = $customName;
-
-        return $this;
-    }
-
-    public function getFieldName(string $systemFieldName)
-    {
-        $fieldName = $systemFieldName;
-        if (isset($this->fieldsCustomNameMap[$systemFieldName])) {
-            $fieldName = $this->fieldsCustomNameMap[$systemFieldName];
+        public function __construct(protected string $name)
+        {
         }
 
-        return $fieldName;
-    }
+        public function setTableRegistry(?TableRegistry $tableRegistry): static
+        {
+            $this->tableRegistry = $tableRegistry;
 
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    public function getFieldsSqlMap(): array
-    {
-        return $this->fieldsSqlMap;
-    }
-
-    public function isPkAutoInc(): bool
-    {
-        return $this->isPkAutoInc;
-    }
-
-    public function setIsPkAutoInc(bool $isPkAutoInc): static
-    {
-        $this->isPkAutoInc = $isPkAutoInc;
-
-        return $this;
-    }
-
-    public function setPkField(string $pkField): static
-    {
-        $this->pkField = $pkField;
-
-        return $this;
-    }
-
-    public function getPkField(): string
-    {
-        return $this->pkField;
-    }
-
-    public function setPkValueCallable(callable $PkValueCallable): static
-    {
-        $this->PkValueCallable = $PkValueCallable;
-
-        return $this;
-    }
-
-    public function calcPk(): int|string
-    {
-        return call_user_func_array($this->PkValueCallable, []);
-    }
-
-    public function drop()
-    {
-        $sql = $this->buildDropSql();
-        $this->tableRegistry->logInfo('执行：' . $sql);
-
-        return $this->tableRegistry->getDbManager()->execute($sql);
-    }
-
-    public function buildDropSql(): string
-    {
-        return 'DROP TABLE IF EXISTS `' . $this->name . '`;';
-    }
-
-    public function truncate()
-    {
-        $sql = $this->buildTruncateSql();
-        $this->tableRegistry->logInfo('执行：' . $sql);
-
-        return $this->tableRegistry->getDbManager()->execute($sql);
-    }
-
-    public function buildTruncateSql(): string
-    {
-        return 'TRUNCATE `' . $this->name . '`;';
-    }
-
-    public function create(bool $forceCreate = false)
-    {
-        if ($forceCreate) {
-            $this->drop();
+            return $this;
         }
 
-        $sql = $this->buildCreateSql();
-        $this->tableRegistry->logInfo('执行：' . $sql);
-
-        return $this->tableRegistry->getDbManager()->execute($sql);
-    }
-
-    public function buildCreateSql(): string
-    {
-        $sql = [];
-
-        $sql[] = 'CREATE TABLE IF NOT EXISTS `' . $this->name . '` (';
-
-        if ($this->isPkAutoInc) {
-            $sql[] = "`" . $this->pkField . "` bigint(10) unsigned NOT NULL AUTO_INCREMENT,";
-        } else {
-            $sql[] = "`" . $this->pkField . "` bigint(10) unsigned NOT NULL,";
+        public function getTableRegistry(): ?TableRegistry
+        {
+            return $this->tableRegistry;
         }
 
-        foreach ($this->fieldsSqlMap as $systemFieldName => $sqlTemplate) {
-            $fieldName = $this->getFieldName($systemFieldName);
+        public function isTableCreated(): bool
+        {
+            try
+            {
+                $this->tableIns()->find();
 
-            $sql[] = strtr($sqlTemplate, [
-                "__FIELD__NAME__" => $fieldName,
-            ]);
+                return true;
+            }
+            catch (\Exception $e)
+            {
+                return false;
+            }
         }
 
-        foreach ($this->indexSentence as $systemFieldName => $sentence) {
-            $fieldNameArray = explode(',', $systemFieldName);
+        public function setFieldName($systemName, $customName): static
+        {
+            $this->fieldsCustomNameMap[$systemName] = $customName;
 
-            $t = [];
-            foreach ($fieldNameArray as $fieldName) {
-                $t[] = $this->getFieldName($fieldName);
+            return $this;
+        }
+
+        public function getFieldName(string $systemFieldName)
+        {
+            $fieldName = $systemFieldName;
+            if (isset($this->fieldsCustomNameMap[$systemFieldName]))
+            {
+                $fieldName = $this->fieldsCustomNameMap[$systemFieldName];
             }
 
-            $sql[] = strtr($sentence, [
-                "__INDEX__NAME__" => implode('_', $t),
-                "__FIELD__NAME__" => implode(',', array_map(function ($v) {
-                    return "`$v`";
-                }, $t)),
-            ]);
+            return $fieldName;
         }
 
-        $sql[] = "PRIMARY KEY (`" . $this->pkField . "`)";
+        public function getName(): string
+        {
+            return $this->name;
+        }
 
-        $sql[] = ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci COMMENT='" . $this->comment . "';" . PHP_EOL;
+        public function getFieldsSqlMap(): array
+        {
+            return $this->fieldsSqlMap;
+        }
 
-        return implode(PHP_EOL, $sql);
+        public function isPkAutoInc(): bool
+        {
+            return $this->isPkAutoInc;
+        }
+
+        public function setIsPkAutoInc(bool $isPkAutoInc): static
+        {
+            $this->isPkAutoInc = $isPkAutoInc;
+
+            return $this;
+        }
+
+        public function setPkField(string $pkField): static
+        {
+            $this->pkField = $pkField;
+
+            return $this;
+        }
+
+        public function getPkField(): string
+        {
+            return $this->pkField;
+        }
+
+        public function setPkValueCallable(callable $pkValueCallable): static
+        {
+            $this->pkValueCallable = $pkValueCallable;
+
+            return $this;
+        }
+
+        public function calcPk(): int|string|null
+        {
+            if (is_callable($this->pkValueCallable))
+            {
+
+                return call_user_func_array($this->pkValueCallable, []);
+            }
+
+            return null;
+        }
+
+        public function getCount(): int
+        {
+            return $this->tableIns()->count();
+        }
+
+        public function drop()
+        {
+            $sql = $this->buildDropSql();
+            $this->tableRegistry->logInfo('执行：' . $sql);
+
+            return $this->tableRegistry->getDbManager()->execute($sql);
+        }
+
+        public function truncate()
+        {
+            $sql = $this->buildTruncateSql();
+            $this->tableRegistry->logInfo('执行：' . $sql);
+
+            return $this->tableRegistry->getDbManager()->execute($sql);
+        }
+
+        public function create(bool $forceCreate = false)
+        {
+            if ($forceCreate)
+            {
+                $this->drop();
+            }
+
+            $sql = $this->buildCreateSql();
+            $this->tableRegistry->logInfo('执行：' . $sql);
+
+            return $this->tableRegistry->getDbManager()->execute($sql);
+        }
+
+        public function tableIns(): Query
+        {
+            return $this->tableRegistry->getDbManager()->table($this->name);
+        }
+
+
+        public function buildDropSql(): string
+        {
+            return 'DROP TABLE IF EXISTS `' . $this->getBuildTableName() . '`;';
+        }
+
+        public function buildTruncateSql(): string
+        {
+            return 'TRUNCATE `' . $this->getBuildTableName() . '`;';
+        }
+
+        public function buildCreateSql(): string
+        {
+            $sql = [];
+
+            $sql[] = 'CREATE TABLE IF NOT EXISTS `' . $this->getBuildTableName() . '` (';
+
+            if ($this->isPkAutoInc)
+            {
+                $sql[] = "`" . $this->pkField . "` bigint(10) unsigned NOT NULL AUTO_INCREMENT,";
+            }
+            else
+            {
+                $sql[] = "`" . $this->pkField . "` bigint(10) unsigned NOT NULL,";
+            }
+
+            foreach ($this->fieldsSqlMap as $systemFieldName => $sqlTemplate)
+            {
+                $fieldName = $this->getFieldName($systemFieldName);
+
+                $sql[] = strtr($sqlTemplate, [
+                    "__FIELD__NAME__" => $fieldName,
+                ]);
+            }
+
+            foreach ($this->indexSentence as $systemFieldName => $sentence)
+            {
+                $fieldNameArray = explode(',', $systemFieldName);
+
+                $t = [];
+                foreach ($fieldNameArray as $fieldName)
+                {
+                    $t[] = $this->getFieldName($fieldName);
+                }
+
+                $sql[] = strtr($sentence, [
+                    "__INDEX__NAME__" => implode('_', $t),
+                    "__FIELD__NAME__" => implode(',', array_map(function($v) {
+                        return "`$v`";
+                    }, $t)),
+                ]);
+            }
+
+            $sql[] = "PRIMARY KEY (`" . $this->pkField . "`)";
+
+            $sql[] = ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci COMMENT='" . str_replace("'", "\\'", $this->comment) . "';" . PHP_EOL;
+
+            return implode(PHP_EOL, $sql);
+        }
+
+        protected function getBuildTableName(): string
+        {
+            return $this->name;
+        }
     }
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
