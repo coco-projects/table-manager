@@ -6,7 +6,7 @@
 
     abstract class TableAbstract
     {
-        protected ?TableRegistry $tableRegistry;
+        protected ?TableRegistry $tableRegistry   = null;
         protected string         $comment         = '';
         protected string         $pkField         = 'id';
         protected bool           $isPkAutoInc     = true;
@@ -46,14 +46,14 @@
             }
         }
 
-        public function setFieldName($systemName, $customName): static
+        public function setFieldName(string $systemName, string $customName): static
         {
             $this->fieldsCustomNameMap[$systemName] = $customName;
 
             return $this;
         }
 
-        public function getFieldName(string $systemFieldName)
+        public function getFieldName(string $systemFieldName):string
         {
             $fieldName = $systemFieldName;
             if (isset($this->fieldsCustomNameMap[$systemFieldName]))
@@ -105,7 +105,7 @@
             return $this;
         }
 
-        public function calcPk(): int|string|null
+        public function calcPk(): ?int
         {
             if (is_callable($this->pkValueCallable))
             {
@@ -210,9 +210,20 @@
 
             $sql[] = "PRIMARY KEY (`" . $this->pkField . "`)";
 
-            $sql[] = ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci COMMENT='" . str_replace("'", "\\'", $this->comment) . "';" . PHP_EOL;
+            $sql[] = ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci COMMENT='" . $this->escapeSqlString($this->comment) . "';" . PHP_EOL;
 
             return implode(PHP_EOL, $sql);
+        }
+
+        protected function escapeSqlString(string $value): string
+        {
+            return str_replace([
+                "\\",
+                "'",
+            ], [
+                "\\\\",
+                "\\'",
+            ], $value);
         }
 
         protected function getBuildTableName(): string

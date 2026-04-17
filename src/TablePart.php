@@ -14,7 +14,7 @@
             {
                 throw new \InvalidArgumentException('tableCount must be greater than 0');
             }
-            parent:: __construct($name);
+            parent::__construct($name);
         }
 
         public function findBySymbolAndIdPart(string|int $symbol)
@@ -64,8 +64,6 @@
                 try
                 {
                     $this->getTableInsById($i)->find();
-                    $this->tableRegistry->getDbManager()->execute($sql);
-
                 }
                 catch (\Exception $e)
                 {
@@ -260,7 +258,7 @@
 
         private function stringToInteger(string|int $string): int
         {
-            return hexdec(substr(md5($string), 0, 8));
+            return (int)sprintf('%u', crc32((string)$string));
         }
 
         protected function getBuildTableName(): string
