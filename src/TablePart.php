@@ -53,7 +53,7 @@
             foreach ($dataToInsert as $dataToTableId => $datas)
             {
                 $this->setCurrentTableId($dataToTableId);
-                $this->tableInsCurrent()->insertAll($datas);
+                $this->tableInsCurrent()->extra('IGNORE')->insertAll($datas);
             }
         }
 
