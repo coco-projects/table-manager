@@ -4,25 +4,25 @@
 
     require 'common.php';
 
-    /** @var \Coco\examples\TablePartTest $tabIns */
-    $tabIns = $db->getTable('part_test');
+    /** @var \Coco\examples\TablePartTest $tab */
+    $tab = $db->getTable('part_test');
 
     $title1 = "test title1";
-    $tabIns->setCurrentTableBySymbol($title1);
-    $tabIns->tableInsCurrent()->insert([
-        $tabIns->getPkField()       => $tabIns->calcPk(),
-        $tabIns->getPathField()     => "test",
-        $tabIns->getTitleField()    => $title1,
-        $tabIns->getPageTypeField() => 1,
-        $tabIns->getTokenField()    => "123456",
+    $tab->setCurrentTableBySymbol($title1);
+    $tab->tableInsCurrent()->insert([
+        $tab->getPkField()       => $tab->calcPk(),
+        $tab->getPathField()     => "test",
+        $tab->getTitleField()    => $title1,
+        $tab->getPageTypeField() => 1,
+        $tab->getTokenField()    => "123456",
     ]);
 
     $title2 = "test title7";
-    $tabIns->setCurrentTableBySymbol($title2);
-    $tabIns->tableInsCurrent()->insert([
-        $tabIns->getPkField()       => $tabIns->calcPk(),
-        $tabIns->getPathField()     => "test",
-        $tabIns->getTitleField()    => $title2,
-        $tabIns->getPageTypeField() => 1,
-        $tabIns->getTokenField()    => "123456",
+    $tab->setCurrentTableBySymbol($title2);
+    $tab->tableInsCurrent()->insert([
+        $tab->getPkField()       => $tab->calcPk(),
+        $tab->getPathField()     => "test",
+        $tab->getTitleField()    => $title2,
+        $tab->getPageTypeField() => 1,
+        $tab->getTokenField()    => "123456",
     ]);

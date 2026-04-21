@@ -17,44 +17,81 @@
             parent::__construct($name);
         }
 
-        public function findBySymbolAndIdPart(string|int $symbol)
+        /* 根据数值，返回他对应的表实例，并附加上这个symbol条件
+       * ---------------------------------------------------------
+       * */
+        public function getTableInsWithSymbol(string $symbolField, string|int $symbol): Query
         {
-            return $this->findBySymbol($this->getPkField(), $symbol);
+            return $this->getTableInsBySymbol($symbol)->where($symbolField, '=', $symbol);
         }
 
-        public function findBySymbol(string $symbolField, string|int $symbol)
+        /* 根据数值，返回他对应的表实例
+       * ---------------------------------------------------------
+       * */
+        public function getTableInsBySymbol(string|int $symbol): Query
         {
-            $tableId = $this->symbolToTableId($symbol);
-
-            $this->setCurrentTableId($tableId);
-
-            return $this->tableInsCurrent()->where($symbolField, '=', $symbol)->find();
+            return $this->getTableInsById($this->symbolToTableId($symbol));
         }
 
-        public function insertAllByIdPart($data): void
+        /*union 查询数据的条件设置
+       * ---------------------------------------------------------
+       * */
+        public function setUnionCondition(callable $queryCallback): Query
         {
-            $this->insertAll($this->getPkField(), $data);
+            $tableIns0 = $this->tableIns();
+
+            call_user_func_array($queryCallback, [
+                $tableIns0,
+                $this,
+            ]);
+
+            for ($i = 1; $i < $this->tableCount; $i++)
+            {
+                $tableIns0 = $tableIns0->unionAll(function(Query $query) use ($i, $queryCallback) {
+
+                    $query->table($this->buildTableName($i));
+
+                    call_user_func_array($queryCallback, [
+                        $query,
+                        $this,
+                    ]);
+
+                });
+            }
+
+            return $tableIns0;
         }
 
-        public function insertAll(string $symbolField, $data): void
+        /*批量写入数据
+       * ---------------------------------------------------------
+       * */
+        public function insertAllByIdPart($data): int
+        {
+            return $this->insertAll($this->getPkField(), $data);
+        }
+
+        public function insertAll(string $symbolField, $data): int
         {
             $dataToInsert = [];
-
+            $count        = 0;
             foreach ($data as $k => $v)
             {
                 if (!isset($v[$symbolField]))
                 {
                     continue;
                 }
-                $dataToTableId                  = $this->symbolToTableId($v[$symbolField]);
+                $dataToTableId = $this->symbolToTableId($v[$symbolField]);
+
                 $dataToInsert[$dataToTableId][] = $v;
+                $count++;
             }
 
             foreach ($dataToInsert as $dataToTableId => $datas)
             {
-                $this->setCurrentTableId($dataToTableId);
-                $this->tableInsCurrent()->extra('IGNORE')->insertAll($datas);
+                $this->getTableInsById($dataToTableId)->extra('IGNORE')->insertAll($datas);
             }
+
+            return $count;
         }
 
         public function isTableCreated(): bool
@@ -136,31 +173,6 @@
             return $instance;
         }
 
-        public function setCondition(callable $queryCallback): Query
-        {
-            $tableIns0 = $this->tableIns();
-
-            call_user_func_array($queryCallback, [
-                $tableIns0,
-                $this,
-            ]);
-
-            for ($i = 1; $i < $this->tableCount; $i++)
-            {
-                $tableIns0 = $tableIns0->unionAll(function(Query $query) use ($i, $queryCallback) {
-
-                    $query->table($this->buildTableName($i));
-
-                    call_user_func_array($queryCallback, [
-                        $query,
-                        $this,
-                    ]);
-
-                });
-            }
-
-            return $tableIns0;
-        }
 
         public function getCountCurrent(): int
         {
@@ -267,9 +279,3 @@
         }
 
     }
-
-
-
-
-
-

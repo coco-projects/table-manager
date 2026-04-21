@@ -7,10 +7,8 @@
     /** @var \Coco\examples\TablePartTest $tab */
     $tab = $db->getTable('part_test');
 
-    $id = 1230546255403287967;
+    $id = 1230546255399093142;
 
-    $tabIns = $tab->getTableInsBySymbol(1230546255403287967);
-
-    $result = $tabIns->where($tab->getPkField(), '=', $id)->find();
+    $result = $tab->getTableInsWithSymbol($tab->getPkField(), $id)->find();
 
     print_r($result);

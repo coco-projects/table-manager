@@ -2,12 +2,12 @@
 
     require 'common.php';
 
-    /** @var \Coco\examples\TablePartTest $tabIns */
-    $tabIns = $db->getTable('part_test');
+    /** @var \Coco\examples\TablePartTest $tab */
+    $tab = $db->getTable('part_test');
 
     $title1 = "test title7";
-    $tabIns->setCurrentTableBySymbol($title1);
+    $tab->setCurrentTableBySymbol($title1);
 
-    $result = $tabIns->getCountCurrent();
+    $result = $tab->getCountCurrent();
 
     print_r($result);

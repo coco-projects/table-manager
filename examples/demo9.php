@@ -5,25 +5,21 @@
 
     require 'common.php';
 
-    /** @var \Coco\examples\TablePartTest $tabIns */
-    $tabIns = $db->getTable('part_test');
-
-
+    /** @var \Coco\examples\TablePartTest $tab */
+    $tab = $db->getTable('part_test');
 
     $title1 = "test title7";
-    $result = $tabIns->setCondition(function(Query $query, TableAbstract $tabIns) {
+    $result = $tab->setUnionCondition(function(Query $query, TableAbstract $tab) {
         $query->where([
             [
-                $tabIns->getTitleField(),
+                $tab->getTitleField(),
                 'like',
                 '%title%',
             ],
         ]);
 
-    })->fetchSql(false)->order($tabIns->getTitleField(),'desc')->group($tabIns->getTitleField())->select();
+    })->fetchSql(false)->order($tab->getTitleField(), 'desc')->group($tab->getTitleField())->select();
 
-
-
-//    $result = $tabIns->getCount();
+//    $result = $tab->getCount();
 
     print_r($result);
