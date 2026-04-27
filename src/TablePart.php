@@ -160,6 +160,18 @@
             }
         }
 
+        public function eachTableIns(callable $callback):static
+        {
+            for ($i = 0; $i < $this->tableCount; $i++)
+            {
+                call_user_func_array($callback, [
+                    $this->getTableInsById($i),
+                ]);
+            }
+
+            return $this;
+        }
+
         /**
          * 始终返回 第一个tab，id为0的那个
          * 后面始终使用 setCondition 设置条件
@@ -263,7 +275,7 @@
             return $this->name . '_' . $id;
         }
 
-        private function getTableInsById(int $id): Query
+        public function getTableInsById(int $id): Query
         {
             return $this->tableRegistry->getDbManager()->table($this->buildTableName($id));
         }
