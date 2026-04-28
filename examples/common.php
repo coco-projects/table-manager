@@ -1,5 +1,6 @@
 <?php
 
+    use Coco\examples\TablePartTest;
     use Coco\examples\TestTable1;
     use Coco\examples\TestTable2;
     use Coco\tableManager\TableRegistry;
@@ -38,7 +39,7 @@
     });
 
     // 初始化分表
-    $partTable = new \Coco\examples\TablePartTest('part_test', 5);
+    $partTable = new TablePartTest('part_test', 5);
 
     $db->addTable($partTable, function(\Coco\tableManager\TablePart $table) {
         $registry = $table->getTableRegistry();
@@ -47,3 +48,4 @@
         $table->setIsPkAutoInc(false);
         $table->setPkValueCallable($registry::snowflakePKCallback());
     });
+

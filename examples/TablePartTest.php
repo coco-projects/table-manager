@@ -21,6 +21,12 @@
             "token"          => "KEY `__INDEX__NAME___index` (__FIELD__NAME__),",
         ];
 
+        public function __construct(string $name, int $tableCount = 1)
+        {
+            parent::__construct($name, $tableCount);
+            $this->setShardField('token');
+        }
+
         public function setPathField(string $value): static
         {
             $this->setFieldName('path', $value);
@@ -68,5 +74,4 @@
         {
             return $this->getFieldName('token');
         }
-
     }
