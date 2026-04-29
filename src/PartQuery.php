@@ -207,7 +207,7 @@
             return $this;
         }
 
-        public function update(array $data): int|array
+        public function update(array $data): int|array|string
         {
             $this->ensureSafeUpdateOrDelete();
 
@@ -215,7 +215,7 @@
             {
                 $query = $this->buildSingleQuery($this->resolveSingleTableId());
 
-                return (int)$query->fetchSql($this->fetchSql)->update($data);
+                return $query->fetchSql($this->fetchSql)->update($data);
             }
 
             if ($this->fetchSql)
@@ -233,7 +233,7 @@
             return $total;
         }
 
-        public function delete(): int|array
+        public function delete(): int|array|string
         {
             $this->ensureSafeUpdateOrDelete();
 
@@ -241,7 +241,7 @@
             {
                 $query = $this->buildSingleQuery($this->resolveSingleTableId());
 
-                return (int)$query->fetchSql($this->fetchSql)->delete();
+                return $query->fetchSql($this->fetchSql)->delete();
             }
 
             if ($this->fetchSql)

@@ -520,7 +520,7 @@ $tab->insertAllByShardField($rows, true);
 ```
 
 如果不是自增主键，会自动补主键。
-
+delete
 ---
 
 # fetchSql 调试
